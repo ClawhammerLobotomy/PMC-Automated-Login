@@ -3,7 +3,7 @@
 # PMC Automated Login
 
 Plex Manufacturing Cloud (PMC) Automated Login is a base to perform simple automated processes within the PMC environment.
-Once the Plex calss is called, you can perform any selenium based operations within the browser environment.
+Once the Plex class is called, you can perform any selenium based operations within the browser environment.
 
 ## Documentation
 
