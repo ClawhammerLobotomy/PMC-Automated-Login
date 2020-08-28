@@ -8,7 +8,7 @@ Once the Plex class is called, you can perform any selenium based operations wit
 ## Documentation
 
 ### Plex Class
-    Plex(environment, user_id, password, company_code, pcn='', db='test')
+    Plex(environment, user_id, password, company_code, pcn='', db='test', use_config=True, pcn_path=Path('pcn.json'))
 
 - environment
   - Accepted options are Classic and UX. Determines how the program will log in
@@ -23,6 +23,13 @@ Once the Plex class is called, you can perform any selenium based operations wit
   - Will not be needed if the account only has one PCN access or if using a UX login and operating in the account's main PCN.
 - db
   - Optional. Defaults to 'test'. Accepted values are 'test' and 'prod'. Can be changed via the config file after it is created.
+- use_config
+  - Optional. Defaults to True. If false, it will bypass the configuration setup and use the supplied credentials.
+  - Useful for GUI purposes and in order to not store plain text login details
+- pcn_path
+  - Optional. Allows for the main script to supply a path for the PCN json file.
+  - Useful for compiled scripts where the end user wouldn't be able to supply the csv from the sql query.
+  - Defaults to the working directory
 
 
 ## Contact
