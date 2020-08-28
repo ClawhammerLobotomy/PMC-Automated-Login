@@ -271,22 +271,22 @@ Press OK to select the csv file.'''
     # Click PCN
     # Default PCN can be set in the config file
     # By default this is configured to not be used
-        try:
-            if self.pcn != '':
-                if self.environment == 'UX':
-                    self.driver.get(f'{url_comb}/SignOn/Customer/{self.pcn}?{url_token}')
-                    return (self.driver, url_comb, url_token)
-                else:
+        if self.pcn != '':
+            if self.environment == 'UX':
+                self.driver.get(f'{url_comb}/SignOn/Customer/{self.pcn}?{url_token}')
+                return (self.driver, url_comb, url_token)
+            else:
+                try:
                     self.pcn = self.pcn_dict[self.plex_pcn]
                     try:
                         self.driver.find_element_by_xpath('//img[@alt="' + self.pcn +
                                                     '"]').click()
-                    except:
+                    except(NoSuchElementException):
                         self.driver.find_elements_by_xpath('//*[contains(text(), "' +
                                                     self.pcn + '")]')[0].click()
-                    return (self.driver, url_comb, "None")
-        except(IndexError):
-            raise SystemExit(self.driver, 0)
+                except(IndexError):
+                    raise SystemExit(self.driver, 0)
+                return (self.driver, url_comb, "None")
 
     '''
     Downloads the chromedriver and cumulus plugin that will
