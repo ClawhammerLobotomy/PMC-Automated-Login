@@ -7,6 +7,7 @@ Automatically downloads the proper Chrome webdriver required based on your Chrom
 Automatically downloads the Cumulus Plex Chrome extension
 Added functionality to ignore config file and use passed in login details
 Added check for failed login parameters to produce an error
+Added argument for specifying the pcn json file location
 """
 #======Begin importing======#
 # Needed for referencing the main executed script
