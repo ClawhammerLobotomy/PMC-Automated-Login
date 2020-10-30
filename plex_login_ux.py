@@ -8,6 +8,7 @@ Automatically downloads the Cumulus Plex Chrome extension
 Added functionality to ignore config file and use passed in login details
 Added check for failed login parameters to produce an error
 Added argument for specifying the pcn json file location
+Removed hotkey functionality
 """
 #======Begin importing======#
 # Needed for referencing the main executed script
@@ -20,7 +21,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from threading import Thread
-from pynput import keyboard
+# from pynput import keyboard
 
 # For os file management
 import os
@@ -49,7 +50,7 @@ import zipfile
 from get_file_properties import *
 
 # For creating a hotkey that will pause the running script if needed
-from pynput import keyboard
+# from pynput import keyboard
 
 # For GUI notifications
 import tkinter as tk
@@ -73,9 +74,9 @@ chrome_browser_version = cb_dictionary['FileVersion'][:2] # substring version to
 full_chrome_browser_version = cb_dictionary['FileVersion']
 
 # The key combination to check. Will create a pausefile in the directory which can be used to pause the loops.
-COMBINATIONS = [
-    {keyboard.Key.pause}
-]
+# COMBINATIONS = [
+#     {keyboard.Key.pause}
+# ]
 
 '''
 Plex class
@@ -94,6 +95,7 @@ class Plex:
     db - Optional. Default to 'test'. Accepted values are 'test' and 'prod'.
          Can be changed via the config file after it is created.
     use_config - True/False on whether to use the config file for login details
+    pcn_path = path to the pcn.json file
     '''
     def __init__(self,environment, user_id, password, company_code, pcn='',
                  db='test', use_config=True, pcn_path=Path('pcn.json')):
@@ -127,7 +129,7 @@ Press OK to select the csv file.'''
         self.pcn_dict = {}
         with open(self.pcn_path, 'r', encoding='utf-8') as pcn_config:
             self.pcn_dict = json.load(pcn_config)
-        current = set()
+        self.current = set()
         # Sets the variables for the login operation based on
         # UX or classic environment
         if self.environment == 'UX':
@@ -327,7 +329,7 @@ Press OK to select the csv file.'''
     def frozen_check(self):
         if getattr(sys, 'frozen', False):
         # Running in a bundle
-            self.bundle_dir = sys._MEIPASS
+            self.bundle_dir = sys._MEIPASS # pylint: disable=no-member
         else:
         # Running in a normal Python environment
             self.bundle_dir = os.path.dirname(os.path.abspath(__main__.__file__))
@@ -351,18 +353,18 @@ Press OK to select the csv file.'''
             else:
                 None
     '''
-    def pause(self):
-        print ("Pausing")
-        Path('pausefile.txt').touch()
-    def on_press(self, key):
-        if any([key in COMBO for COMBO in COMBINATIONS]):
-            current.add(key)
-            if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
-                self.pause()
-    def on_release(self, key):
-        if any([key in COMBO for COMBO in COMBINATIONS]):
-            current.remove(key)
-    def listen(self):
-        with keyboard.Listener(on_press=self.on_press,
-                               on_release=self.on_release) as listener:
-            listener.join()
+#     def pause(self):
+#         print ("Pausing")
+#         Path('pausefile.txt').touch()
+#     def on_press(self, key):
+#         if any([key in COMBO for COMBO in COMBINATIONS]):
+#             current.add(key)
+#             if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
+#                 self.pause()
+#     def on_release(self, key):
+#         if any([key in COMBO for COMBO in COMBINATIONS]):
+#             current.remove(key)
+#     def listen(self):
+#         with keyboard.Listener(on_press=self.on_press,
+#                                on_release=self.on_release) as listener:
+#             listener.join()
