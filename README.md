@@ -1,3 +1,5 @@
+This repo has been surplanted by https://github.com/ClawhammerLobotomy/PMC_Automation_Tools with up to date functionality.
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # PMC Automated Login
